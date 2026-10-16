@@ -14,21 +14,21 @@ int main() {
 		cout << e.what() << endl;
 		return 0;
 	}
-	ra.print("ra is ", cout);	
-	rb.print("rb is ", cout);	
+	ra.print("The first rational number is ", cout);	
+	rb.print("The second rational number is ", cout);	
 
 	Rational r_sum(ra + rb);
-	r_sum.print("sum is ", cout);	
+	r_sum.print("Sum is ", cout);	
 
-	Rational r_dif(ra - rb);
-	r_dif.print("dif is ", cout);	
+	Rational r_difference(ra - rb);
+	r_difference.print("Difference is ", cout);	
 
-	Rational r_pro(ra * rb);
-	r_pro.print("pro is ", cout);	
+	Rational r_product(ra * rb);
+	r_product.print("Product is ", cout);	
 
 	try {
-		Rational r_div(ra / rb);
-		r_div.print("div is ", cout);	
+		Rational r_division(ra / rb);
+		r_division.print("Division is ", cout);	
 	} catch (exception & e) {
 		cout << e.what() << endl;
 		return 0;

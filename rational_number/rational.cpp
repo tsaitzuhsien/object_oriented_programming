@@ -51,7 +51,7 @@ void Rational::print(string s, ostream &out) const {
 	return;
 }
 
-uint32_t gcd(uint32_t u, uint32_t v) {
+int gcd(int u, int v) {
 	if (u % v == 0) {
 		return v;
 	} else {
@@ -60,7 +60,7 @@ uint32_t gcd(uint32_t u, uint32_t v) {
 }
 
 void Rational::simplify() {
-	uint32_t g = gcd(numerator, denominator);
+	int g = gcd(abs(numerator), abs(denominator));
 	numerator /= g;
 	denominator /= g;
 	return;
@@ -80,7 +80,7 @@ const char* UndefinedRationalNumber::what() const noexcept {
 
 UndefinedRationalNumber::~UndefinedRationalNumber() noexcept {
 	free(error_msg);
-	cout << "Destructing the exception with error code " << error_code << endl;
+	cout << "Destructing the exception with error code " << error_code << "." << endl;
 }
 
 istream& operator>>(istream &in, Rational &r) {
@@ -89,8 +89,8 @@ istream& operator>>(istream &in, Rational &r) {
 		auto slash_pos {s.find("/")};
 		if (slash_pos == string::npos)
 			throw UndefinedRationalNumber(334);
-		uint32_t a = stoi(s.substr(0, slash_pos));
-		uint32_t b = stoi(s.substr(slash_pos + 1));
+		int a = stoi(s.substr(0, slash_pos));
+		int b = stoi(s.substr(slash_pos + 1));
 		r = Rational(a, b);
 	}
 	return in;
