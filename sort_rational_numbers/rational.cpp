@@ -22,11 +22,6 @@ bool Rational::operator<(const Rational &r) const {
 	return (r.denominator * numerator < r.numerator * denominator);
 }
 
-void Rational::print(string s, ostream &out) const {
-	out << s << numerator << '/' << denominator << endl;
-	return;
-}
-
 istream& operator>>(istream &in, Rational &r) {
 	string s;
 	if (in >> s) {

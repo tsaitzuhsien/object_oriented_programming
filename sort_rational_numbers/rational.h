@@ -17,5 +17,10 @@ class Rational {
 		void print(string s, ostream &out) const;
 };
 
+void Rational::print(string s, ostream &out) const {
+	out << s << numerator << '/' << denominator << endl;
+	return;
+}
+
 istream& operator>>(istream &in, vector<Rational> &rn);
 ostream& operator<<(ostream &out, const vector<Rational> &rn);
