@@ -8,7 +8,7 @@ using namespace std;
 
 class Rational {
 	private:
-		int denominator, numerator;
+		int numerator, denominator;
 		void simplify();
 	public:
 		Rational(int a = 0, int b = 1);
@@ -23,10 +23,12 @@ class Rational {
 class UndefinedRationalNumber: public exception {
 	private:
 		int error_code;
+		char *error_msg;
 	public:
-		UndefinedRationalNumber();
-		const string what() const noexcept override;
-}
+		UndefinedRationalNumber(int code) noexcept;
+		const char* what() const noexcept override;
+		~UndefinedRationalNumber() noexcept;
+};
 
 istream& operator>>(istream &in, Rational &r);
 ostream& operator<<(ostream &out, const Rational &r);

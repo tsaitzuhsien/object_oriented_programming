@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdio>
 #include <cstdlib>
 #include <cassert>
 #include <cstdbool>
@@ -12,7 +13,7 @@ using namespace std;
 Rational::Rational(int a, int b): numerator(a), denominator(b)
 {
 	if (b == 0) {
-		throw undefined_rational_number("The denominator cannot be zero.\n");
+		throw UndefinedRationalNumber(332);
 	}
 	simplify();
 }
@@ -65,11 +66,21 @@ void Rational::simplify() {
 	return;
 }
 
-UndefinedRationalNumber::UndefinedRationalNumber(): error_code(332) {
+UndefinedRationalNumber::UndefinedRationalNumber(int code) noexcept: error_code(code) {
+	error_msg = (char *)malloc(sizeof(char) * 256);
 }
 
-const string UndefinedRationalNumber::what() const noexcept override {
-	return "The denominator cannot be zero.";
+const char* UndefinedRationalNumber::what() const noexcept {
+	if (error_code == 332)
+		sprintf(error_msg, "Error code %d: the denominator cannot be zero.", error_code);
+	else if (error_code == 334)
+		sprintf(error_msg, "Error code %d: the slash is required.", error_code);
+	return error_msg;
+}
+
+UndefinedRationalNumber::~UndefinedRationalNumber() noexcept {
+	free(error_msg);
+	cout << "Destructing the exception." << endl;
 }
 
 istream& operator>>(istream &in, Rational &r) {
@@ -77,7 +88,7 @@ istream& operator>>(istream &in, Rational &r) {
 	if (in >> s) {
 		auto slash_pos {s.find("/")};
 		if (slash_pos == string::npos)
-			exit(-1);
+			throw UndefinedRationalNumber(334);
 		uint32_t a = stoi(s.substr(0, slash_pos));
 		uint32_t b = stoi(s.substr(slash_pos + 1));
 		r = Rational(a, b);
