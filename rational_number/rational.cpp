@@ -80,7 +80,7 @@ const char* UndefinedRationalNumber::what() const noexcept {
 
 UndefinedRationalNumber::~UndefinedRationalNumber() noexcept {
 	free(error_msg);
-	cout << "Destructing the exception." << endl;
+	cout << "Destructing the exception with error code " << error_code << endl;
 }
 
 istream& operator>>(istream &in, Rational &r) {
