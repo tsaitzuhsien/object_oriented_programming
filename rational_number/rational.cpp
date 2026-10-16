@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cstdbool>
 #include <string>
+#include <exception>
 
 #include "rational.h"
 
@@ -10,7 +11,9 @@ using namespace std;
 
 Rational::Rational(int a, int b): numerator(a), denominator(b)
 {
-	assert(b != 0);
+	if (b == 0) {
+		throw undefined_rational_number("The denominator cannot be zero.\n");
+	}
 	simplify();
 }
 
@@ -60,6 +63,13 @@ void Rational::simplify() {
 	numerator /= g;
 	denominator /= g;
 	return;
+}
+
+UndefinedRationalNumber::UndefinedRationalNumber(): error_code(332) {
+}
+
+const string UndefinedRationalNumber::what() const noexcept override {
+	return "The denominator cannot be zero.";
 }
 
 istream& operator>>(istream &in, Rational &r) {
